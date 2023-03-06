@@ -1,0 +1,48 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: cloud-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: cloud
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - cloud-gateway
+  http:
+    - match:
+        - headers:
+            branch:
+              exact: v2
+      route:
+        - destination:
+            host: usercenter-api
+            subset: v2
+            port:
+              number: 8181
+          weight: 100
+    - match:
+        - uri:
+            exact: /ping
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: usercenter-api  # 和DestinationRule中的spec.host配对
+            subset: v1
+            port:
+              number: 8181
+          weight: 100

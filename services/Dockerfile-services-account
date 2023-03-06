@@ -1,0 +1,33 @@
+FROM golang:1.19 AS builder
+
+MAINTAINER BoolDesign "booldesign@163.com"
+
+LABEL stage=gobuilder
+
+ENV CGO_ENABLED 0
+ENV GOPROXY https://goproxy.cn,direct
+
+# RUN apk update --no-cache && apk add --no-cache tzdata
+
+WORKDIR /build
+
+COPY go.mod go.sum ./
+
+RUN go mod download && go mod verify
+
+COPY . .
+
+RUN go build -ldflags="-s -w" -o /app/services-account main.go
+
+
+FROM scratch
+
+ENV TZ Asia/Shanghai
+
+WORKDIR /app
+
+COPY --from=builder /app/services-account /app/services-account
+
+EXPOSE 4001
+
+CMD ["./services-account"]

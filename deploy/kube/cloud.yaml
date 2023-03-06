@@ -1,0 +1,221 @@
+##################################################################################################
+# UserCenter api
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: usercenter-api
+  labels:
+    app: usercenter-api
+    service: usercenter-api
+spec:
+  ports:
+    - port: 8181
+      name: http
+  selector:
+    app: usercenter-api # 绑定哪个Deployment
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloud-usercenter-api
+  labels:
+    account: usercenter-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usercenter-api-v1
+  labels:
+    app: usercenter-api
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usercenter-api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: usercenter-api
+        version: v1
+    spec:
+      restartPolicy: Always
+      serviceAccountName: cloud-usercenter-api
+      containers:
+        - name: usercenter-api
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.3.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8181
+          securityContext:
+            runAsUser: 1000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usercenter-api-v2
+  labels:
+    app: usercenter-api
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usercenter-api
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: usercenter-api
+        version: v2
+    spec:
+      restartPolicy: Always
+      serviceAccountName: cloud-usercenter-api
+      containers:
+        - name: usercenter-api
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.3.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8181
+          securityContext:
+            runAsUser: 1000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+---
+##################################################################################################
+# Account service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-service
+  labels:
+    app: account-service
+    service: account-service
+spec:
+  ports:
+    - name: grpc # important!
+      protocol: TCP
+      port: 4001
+  selector:
+    app: account-service
+  type: ClusterIP
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloud-account-service
+  labels:
+    account: account-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service-v1
+  labels:
+    app: account-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: account-service
+        version: v1
+    spec:
+      restartPolicy: Always
+      serviceAccountName: cloud-account-service
+      containers:
+        - name: account-service
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.3.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4001
+              protocol: TCP
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: wlp-output
+              mountPath: /opt/ibm/wlp/output
+          securityContext:
+            runAsUser: 1000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+      volumes:
+        - name: wlp-output
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service-v2
+  labels:
+    app: account-service
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-service
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: account-service
+        version: v2
+    spec:
+      restartPolicy: Always
+      serviceAccountName: cloud-account-service
+      containers:
+        - name: account-service
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.3.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4001
+              protocol: TCP
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: wlp-output
+              mountPath: /opt/ibm/wlp/output
+          securityContext:
+            runAsUser: 1000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+      volumes:
+        - name: wlp-output
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+---

@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: usercenter-api
+spec:
+  hosts:
+    - usercenter-api
+  http:
+    - match:
+        - headers:
+            branch:
+              exact: v2
+      route:
+        - destination:
+            host: usercenter-api
+            subset: v2
+          weight: 100
+    - route:
+        - destination:
+            host: usercenter-api
+            subset: v1
+          weight: 100
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: account-service
+spec:
+  hosts:
+    - account-service
+  http:
+    - match:
+        - headers:
+            branch:
+              exact: v2
+      route:
+        - destination:
+            host: account-service
+            subset: v2
+          weight: 100
+    - route:
+        - destination:
+            host: account-service
+            subset: v1
+          weight: 100
+---
