@@ -1,14 +1,12 @@
 package cli
 
 import (
-	"time"
-
+	"example.com/apis/usercenter/pkg/metadata"
 	"github.com/booldesign/protogen/kitex_gen/services/account/usersrv"
-	"github.com/cloudwego/biz-demo/bookinfo/pkg/metadata"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/klog"
 	xds2 "github.com/cloudwego/kitex/pkg/xds"
-	trace "github.com/kitex-contrib/tracer-opentracing"
+	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 	"github.com/kitex-contrib/xds"
 	"github.com/kitex-contrib/xds/xdssuite"
 )
@@ -18,10 +16,11 @@ var (
 )
 
 func InitAccountClient() usersrv.Client {
-	options := localK8sRegisterClient("account-service:4001")
+	options := localK8sRegisterClient()
 	c, err := usersrv.NewClient(
-		"account-rpc",
+		"account-service:4001",
 		options...,
+		
 	)
 	if err != nil {
 		panic(err)
@@ -29,20 +28,14 @@ func InitAccountClient() usersrv.Client {
 	return c
 }
 
-func localK8sRegisterClient(hostports ...string) []client.Option {
+func localK8sRegisterClient() []client.Option {
 	// initialize xds module
-	if err := xds.Init(); err != nil {
+	if err := xds.Init(xds.WithXDSServerAddress("istiod.istio-system.svc:15010")); err != nil {
 		klog.Fatal(err)
 	}
 
 	return []client.Option{
-		client.WithRPCTimeout(5 * time.Second),     // rpc timeout
-		client.WithConnectTimeout(5 * time.Second), // conn timeout
-		// client.WithFailureRetry(retry.NewFailurePolicy()), // retry
-		client.WithSuite(trace.NewDefaultClientSuite()), // tracer
-		client.WithHostPorts(hostports...),
-		//client.WithTransportProtocol(transport.GRPC),
-		//client.WithMetaHandler(transmeta.ClientHTTP2Handler),
+		client.WithSuite(tracing.NewClientSuite()), // tracer
 		client.WithXDSSuite(xds2.ClientSuite{
 			RouterMiddleware: xdssuite.NewXDSRouterMiddleware(
 				xdssuite.WithRouterMetaExtractor(metadata.ExtractFromPropagator),

@@ -3,19 +3,39 @@
 package main
 
 import (
+	"context"
+	"fmt"
+
 	"example.com/apis/usercenter/router"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/config"
+	hertztracing "github.com/hertz-contrib/obs-opentelemetry/tracing"
+	"github.com/kitex-contrib/obs-opentelemetry/provider"
 )
 
 func main() {
 
+	fmt.Println(1)
+	p := provider.NewOpenTelemetryProvider(
+		provider.WithServiceName("usercenter-api"),
+		provider.WithInsecure(),
+	)
+
+	tracer, cfg := hertztracing.NewServerTracer()
 	options := localOption()
+	options = append(options, tracer)
 	h := server.Default(options...)
+
+	h.Use(hertztracing.ServerMiddleware(cfg))
 
 	router.Register(h)
 	h.Spin()
 
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	if err := p.Shutdown(ctx); err != nil {
+		fmt.Println(err)
+	}
 }
 
 func localOption() []config.Option {
