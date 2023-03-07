@@ -10,8 +10,8 @@ import (
 // UserGetBe implements the UserSrvImpl interface.
 func (s *UserSrvImpl) UserGetBe(ctx context.Context, req *account.UserGetBeReq) (resp *account.UserGetBeResp, err error) {
 	resp = &account.UserGetBeResp{BaseResp: &base.BaseResp{StatusCode: 0, Message: "SUCCESS"}, Data: &account.UserBe{}}
-	resp.Data.Id = 1
-	resp.Data.Name = "edison1"
+	resp.Data.Id = 2
+	resp.Data.Name = "edison2"
 
 	return
 }

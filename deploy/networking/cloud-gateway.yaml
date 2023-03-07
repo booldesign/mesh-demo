@@ -33,16 +33,12 @@ spec:
             subset: v2
             port:
               number: 8181
-          weight: 100
     - match:
-        - uri:
-            exact: /ping
         - uri:
             prefix: /
       route:
         - destination:
-            host: usercenter-api  # 和DestinationRule中的spec.host配对
+            host: usercenter-api
             subset: v1
             port:
               number: 8181
-          weight: 100

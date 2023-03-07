@@ -11,6 +11,7 @@ metadata:
 spec:
   ports:
     - port: 8181
+      protocol: TCP
       name: http
   selector:
     app: usercenter-api # 绑定哪个Deployment
@@ -38,6 +39,8 @@ spec:
       version: v1
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app: usercenter-api
         version: v1
@@ -46,12 +49,24 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.3.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.4.0
           imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: INSTANCE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           ports:
             - containerPort: 8181
-          securityContext:
-            runAsUser: 1000
+              protocol: TCP
           resources:
             limits:
               cpu: 500m
@@ -75,6 +90,8 @@ spec:
       version: v2
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app: usercenter-api
         version: v2
@@ -83,12 +100,24 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.3.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.14.0
           imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: INSTANCE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           ports:
             - containerPort: 8181
-          securityContext:
-            runAsUser: 1000
+              protocol: TCP
           resources:
             limits:
               cpu: 500m
@@ -109,9 +138,9 @@ metadata:
     service: account-service
 spec:
   ports:
-    - name: grpc # important!
+    - port: 4001
       protocol: TCP
-      port: 4001
+      targetPort: thrift
   selector:
     app: account-service
   type: ClusterIP
@@ -138,6 +167,8 @@ spec:
       version: v1
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app: account-service
         version: v1
@@ -146,18 +177,24 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.3.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.4.0
           imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: INSTANCE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           ports:
             - containerPort: 4001
               protocol: TCP
-          volumeMounts:
-            - name: tmp
-              mountPath: /tmp
-            - name: wlp-output
-              mountPath: /opt/ibm/wlp/output
-          securityContext:
-            runAsUser: 1000
           resources:
             limits:
               cpu: 500m
@@ -165,11 +202,6 @@ spec:
             requests:
               cpu: 100m
               memory: 128Mi
-      volumes:
-        - name: wlp-output
-          emptyDir: {}
-        - name: tmp
-          emptyDir: {}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -186,6 +218,8 @@ spec:
       version: v2
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app: account-service
         version: v2
@@ -194,18 +228,24 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.3.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.14.0
           imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: INSTANCE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           ports:
             - containerPort: 4001
               protocol: TCP
-          volumeMounts:
-            - name: tmp
-              mountPath: /tmp
-            - name: wlp-output
-              mountPath: /opt/ibm/wlp/output
-          securityContext:
-            runAsUser: 1000
           resources:
             limits:
               cpu: 500m
@@ -213,9 +253,4 @@ spec:
             requests:
               cpu: 100m
               memory: 128Mi
-      volumes:
-        - name: wlp-output
-          emptyDir: {}
-        - name: tmp
-          emptyDir: {}
 ---

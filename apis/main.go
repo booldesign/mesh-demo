@@ -3,20 +3,19 @@
 package main
 
 import (
-	"example.com/apis/usercenter/cli"
 	"example.com/apis/usercenter/router"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/config"
 )
 
 func main() {
-	cli.InitAccountClient()
 
 	options := localOption()
 	h := server.Default(options...)
 
 	router.Register(h)
 	h.Spin()
+
 }
 
 func localOption() []config.Option {

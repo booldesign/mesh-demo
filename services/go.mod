@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/booldesign/protogen v1.0.1
 	github.com/cloudwego/kitex v0.4.4
+	github.com/kitex-contrib/tracer-opentracing v0.0.3
 )
 
 require (
@@ -23,6 +24,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/oleiade/lane v1.0.1 // indirect
+	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/stretchr/testify v1.8.1 // indirect
 	github.com/tidwall/gjson v1.13.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect

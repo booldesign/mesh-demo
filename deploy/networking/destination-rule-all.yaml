@@ -4,9 +4,6 @@ metadata:
   name: usercenter-api
 spec:
   host: usercenter-api
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
   subsets:
     - name: v1
       labels:
@@ -21,9 +18,6 @@ metadata:
   name: account-service
 spec:
   host: account-service
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
   subsets:
     - name: v1
       labels:
