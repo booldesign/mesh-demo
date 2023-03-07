@@ -52,6 +52,12 @@ spec:
           image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.4.0
           imagePullPolicy: IfNotPresent
           env:
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.version=v1
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://jaeger-collector.istio-system.svc.cluster.local:6831
+            - name: TZ
+              value: Asia/Shanghai
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -100,9 +106,15 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.14.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.20.0
           imagePullPolicy: IfNotPresent
           env:
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.version=v1
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://jaeger-collector.istio-system.svc.cluster.local:6831
+            - name: TZ
+              value: Asia/Shanghai
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -180,6 +192,12 @@ spec:
           image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.4.0
           imagePullPolicy: IfNotPresent
           env:
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.version=v1
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://jaeger-collector.istio-system.svc.cluster.local:6831
+            - name: TZ
+              value: Asia/Shanghai
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -228,9 +246,15 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.14.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.20.0
           imagePullPolicy: IfNotPresent
           env:
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.version=v1
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://jaeger-collector.istio-system.svc.cluster.local:6831
+            - name: TZ
+              value: Asia/Shanghai
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:

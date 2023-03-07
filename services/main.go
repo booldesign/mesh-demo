@@ -7,6 +7,7 @@ import (
 
 	"example.com/services/account/handlers"
 	account "github.com/booldesign/protogen/kitex_gen/services/account/usersrv"
+	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
 	"github.com/kitex-contrib/obs-opentelemetry/provider"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
@@ -37,7 +38,7 @@ func localOption() []server.Option {
 		panic(err)
 	}
 	return []server.Option{
-		// server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "account-service"}),
+		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "account-service"}),
 		server.WithServiceAddr(address),
 		server.WithSuite(tracing.NewServerSuite()),
 	}
