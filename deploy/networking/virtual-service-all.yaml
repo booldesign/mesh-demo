@@ -8,8 +8,8 @@ spec:
   http:
     - match:
         - headers:
-            branch:
-              exact: v2
+            baggage:
+              exact: "branch=v2"
       route:
         - destination:
             host: usercenter-api
@@ -31,8 +31,8 @@ spec:
   http:
     - match:
         - headers:
-            branch:
-              exact: v2
+            baggage:
+              exact: "branch=v2"
       route:
         - destination:
             host: account-service

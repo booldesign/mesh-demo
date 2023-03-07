@@ -55,7 +55,7 @@ spec:
             - name: OTEL_RESOURCE_ATTRIBUTES
               value: service.version=v1
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: http://jaeger-collector.istio-system.svc.cluster.local:6831
+              value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
             - name: TZ
               value: Asia/Shanghai
             - name: POD_NAMESPACE
@@ -112,7 +112,7 @@ spec:
             - name: OTEL_RESOURCE_ATTRIBUTES
               value: service.version=v1
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: http://jaeger-collector.istio-system.svc.cluster.local:6831
+              value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
             - name: TZ
               value: Asia/Shanghai
             - name: POD_NAMESPACE
@@ -195,7 +195,7 @@ spec:
             - name: OTEL_RESOURCE_ATTRIBUTES
               value: service.version=v1
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: http://jaeger-collector.istio-system.svc.cluster.local:6831
+              value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
             - name: TZ
               value: Asia/Shanghai
             - name: POD_NAMESPACE
@@ -252,7 +252,7 @@ spec:
             - name: OTEL_RESOURCE_ATTRIBUTES
               value: service.version=v1
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: http://jaeger-collector.istio-system.svc.cluster.local:6831
+              value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
             - name: TZ
               value: Asia/Shanghai
             - name: POD_NAMESPACE
