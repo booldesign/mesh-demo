@@ -46,7 +46,7 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.3.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.0-thrift
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8181
@@ -83,7 +83,7 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.3.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.0.0-thrift
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8181
@@ -109,9 +109,10 @@ metadata:
     service: account-service
 spec:
   ports:
-    - name: grpc # important!
-      protocol: TCP
+    - protocol: TCP
       port: 4001
+      targetPort: 4001
+
   selector:
     app: account-service
   type: ClusterIP
@@ -146,7 +147,7 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.3.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.0-thrift
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 4001
@@ -194,7 +195,7 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.3.0
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.0.0-thrift
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 4001

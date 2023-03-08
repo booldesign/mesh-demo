@@ -5,7 +5,6 @@ import (
 	"net"
 
 	"example.com/services/account/handlers"
-	"github.com/cloudwego/kitex/pkg/transmeta"
 
 	account "github.com/booldesign/protogen/kitex_gen/services/account/usersrv"
 	"github.com/cloudwego/kitex/pkg/limit"
@@ -31,6 +30,5 @@ func localOption() []server.Option {
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "account-service"}),
 		server.WithServiceAddr(address),
 		server.WithLimit(&limit.Option{MaxConnections: 100, MaxQPS: 100}),
-		server.WithMetaHandler(transmeta.ServerHTTP2Handler),
 	}
 }

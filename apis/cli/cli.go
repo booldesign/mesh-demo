@@ -5,8 +5,6 @@ import (
 
 	"github.com/booldesign/protogen/kitex_gen/services/account/usersrv"
 	"github.com/cloudwego/kitex/client"
-	"github.com/cloudwego/kitex/pkg/transmeta"
-	"github.com/cloudwego/kitex/transport"
 )
 
 var (
@@ -16,7 +14,7 @@ var (
 func InitAccountClient() {
 	options := localK8sRegisterClient("account-service:4001")
 	c, err := usersrv.NewClient(
-		"account-rpc",
+		"account-service",
 		options...,
 	)
 	if err != nil {
@@ -31,7 +29,5 @@ func localK8sRegisterClient(hostports ...string) []client.Option {
 		client.WithConnectTimeout(5 * time.Second), // conn timeout
 		// client.WithFailureRetry(retry.NewFailurePolicy()), // retry
 		client.WithHostPorts(hostports...),
-		client.WithTransportProtocol(transport.GRPC),
-		client.WithMetaHandler(transmeta.ClientHTTP2Handler),
 	}
 }
