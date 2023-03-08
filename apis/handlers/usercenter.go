@@ -32,7 +32,7 @@ func UserGet(ctx context.Context, c *app.RequestContext) {
 		ctx = metainfo.WithPersistentValue(ctx, "branch", c.Request.Header.Get("branch"))
 	}
 
-	userCenterResp, err := cli.InitAccountClient().UserGetBe(ctx, &account.UserGetBeReq{Id: req.Id})
+	userCenterResp, err := cli.AccountClient.UserGetBe(ctx, &account.UserGetBeReq{Id: req.Id})
 	if err != nil {
 		c.JSON(500, "userCenterResp err"+err.Error())
 		return

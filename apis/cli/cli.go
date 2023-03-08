@@ -15,17 +15,18 @@ var (
 	AccountClient usersrv.Client
 )
 
-func InitAccountClient() usersrv.Client {
+func InitAccountClient() {
 	options := localK8sRegisterClient()
 	c, err := usersrv.NewClient(
-		"account-service.banding-cloud:4001",
+		"account-service.banding-cloud.svc.cluster.local:4001",
 		options...,
 	)
 
 	if err != nil {
 		panic(err)
 	}
-	return c
+	AccountClient = c
+	return
 }
 
 func localK8sRegisterClient() []client.Option {
