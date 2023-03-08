@@ -25,8 +25,19 @@ spec:
   http:
     - match:
         - headers:
+            baggage:
+              exact: "branch=v2"
+      route:
+        - destination:
+            host: usercenter-api
+            subset: v2
+            port:
+              number: 8181
+          weight: 100
+    - match:
+        - headers:
             branch:
-              exact: v2
+              exact: "feat_0308_data"
       route:
         - destination:
             host: usercenter-api

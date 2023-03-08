@@ -46,8 +46,13 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.0-thrift
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.6-thrift
           imagePullPolicy: IfNotPresent
+          env:
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.version=v1
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
           ports:
             - containerPort: 8181
           securityContext:
@@ -83,8 +88,13 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.0.0-thrift
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.0.6-thrift
           imagePullPolicy: IfNotPresent
+          env:
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.version=v1
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
           ports:
             - containerPort: 8181
           securityContext:
@@ -147,8 +157,13 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.0-thrift
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.6-thrift
           imagePullPolicy: IfNotPresent
+          env:
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.version=v1
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
           ports:
             - containerPort: 4001
               protocol: TCP
@@ -195,8 +210,13 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.0.0-thrift
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.0.6-thrift
           imagePullPolicy: IfNotPresent
+          env:
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: service.version=v1
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
           ports:
             - containerPort: 4001
               protocol: TCP
