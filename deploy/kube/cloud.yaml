@@ -50,7 +50,7 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.12-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.13-xds
           imagePullPolicy: Always
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
@@ -107,7 +107,7 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.12-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.13-xds
           imagePullPolicy: Always
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
@@ -190,7 +190,7 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.12-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.13-xds
           imagePullPolicy: Always
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
@@ -247,7 +247,7 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.12-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.13-xds
           imagePullPolicy: Always
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES

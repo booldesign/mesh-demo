@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 
+	"example.com/apis/usercenter/cli"
 	"example.com/apis/usercenter/router"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/config"
@@ -14,6 +15,7 @@ import (
 )
 
 func main() {
+	cli.InitAccountClient()
 
 	p := provider.NewOpenTelemetryProvider(
 		provider.WithServiceName("usercenter-api"),
