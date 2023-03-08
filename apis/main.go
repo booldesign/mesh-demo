@@ -15,7 +15,6 @@ import (
 
 func main() {
 
-	fmt.Println(1)
 	p := provider.NewOpenTelemetryProvider(
 		provider.WithServiceName("usercenter-api"),
 		provider.WithInsecure(),

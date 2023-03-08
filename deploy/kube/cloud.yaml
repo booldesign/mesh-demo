@@ -106,7 +106,7 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.0.3-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.0.8-xds
           imagePullPolicy: IfNotPresent
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
@@ -246,7 +246,7 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.0.3-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.0.8-xds
           imagePullPolicy: IfNotPresent
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
