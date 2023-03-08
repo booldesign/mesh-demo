@@ -49,7 +49,7 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.2-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.9-xds
           imagePullPolicy: IfNotPresent
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
@@ -106,11 +106,11 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.0.8-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.0.9-xds
           imagePullPolicy: IfNotPresent
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
-              value: service.version=v1
+              value: service.version=v2
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
             - name: TZ
@@ -189,7 +189,7 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.2-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.9-xds
           imagePullPolicy: IfNotPresent
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
@@ -246,11 +246,11 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.0.8-xds
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.0.9-xds
           imagePullPolicy: IfNotPresent
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
-              value: service.version=v1
+              value: service.version=v2
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: http://opentelemetry-collector.istio-system.svc.cluster.local:4317
             - name: TZ
