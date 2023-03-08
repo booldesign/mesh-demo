@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"example.com/apis/usercenter/cli"
 
@@ -38,7 +39,7 @@ func UserGet(ctx context.Context, c *app.RequestContext) {
 	}
 	var data *UserGetResp
 	if userCenterResp.GetData() != nil {
-		data = &UserGetResp{Id: userCenterResp.GetData().GetId(), Name: userCenterResp.GetData().GetName() + "/api v2"}
+		data = &UserGetResp{Id: userCenterResp.GetData().GetId(), Name: userCenterResp.GetData().GetName() + "/api " + os.Getenv("OTEL_RESOURCE_ATTRIBUTES")}
 	}
 	c.JSON(200, data)
 	return

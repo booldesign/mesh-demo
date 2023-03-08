@@ -12,7 +12,8 @@ spec:
   ports:
     - port: 8181
       protocol: TCP
-      name: http
+      name: http # 不知道为啥
+      # targetPort: http # 改成这个就报错 no healthy upstream
   selector:
     app: usercenter-api # 绑定哪个Deployment
   type: ClusterIP
@@ -49,8 +50,8 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.9-xds
-          imagePullPolicy: IfNotPresent
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.10-xds
+          imagePullPolicy: Always
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
               value: service.version=v1
@@ -106,8 +107,8 @@ spec:
       serviceAccountName: cloud-usercenter-api
       containers:
         - name: usercenter-api
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v2.0.9-xds
-          imagePullPolicy: IfNotPresent
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-usercenter-api:v1.0.10-xds
+          imagePullPolicy: Always
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
               value: service.version=v2
@@ -189,8 +190,8 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.9-xds
-          imagePullPolicy: IfNotPresent
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.10-xds
+          imagePullPolicy: Always
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
               value: service.version=v1
@@ -246,8 +247,8 @@ spec:
       serviceAccountName: cloud-account-service
       containers:
         - name: account-service
-          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v2.0.9-xds
-          imagePullPolicy: IfNotPresent
+          image: registry.cn-hangzhou.aliyuncs.com/mesh-cloud/demo-services-account:v1.0.10-xds
+          imagePullPolicy: Always
           env:
             - name: OTEL_RESOURCE_ATTRIBUTES
               value: service.version=v2

@@ -4,6 +4,7 @@ package handlers
 
 import (
 	"context"
+	"os"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/utils"
@@ -12,6 +13,6 @@ import (
 // Ping .
 func Ping(ctx context.Context, c *app.RequestContext) {
 	c.JSON(200, utils.H{
-		"message": "pongv2",
+		"message": "pong " + os.Getenv("OTEL_RESOURCE_ATTRIBUTES"),
 	})
 }
