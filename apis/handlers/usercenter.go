@@ -2,9 +2,12 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 
 	"example.com/apis/usercenter/cli"
+
 	"github.com/booldesign/protogen/kitex_gen/services/account"
+	"github.com/bytedance/gopkg/cloud/metainfo"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -23,6 +26,10 @@ func UserGet(ctx context.Context, c *app.RequestContext) {
 		c.JSON(400, "params err"+err.Error())
 		return
 	}
+	if c.Request.Header.Get("branch") != "" {
+		fmt.Printf("branch:%s\n", c.Request.Header.Get("branch"))
+		ctx = metainfo.WithPersistentValue(ctx, "branch", c.Request.Header.Get("branch"))
+	}
 
 	userCenterResp, err := cli.InitAccountClient().UserGetBe(ctx, &account.UserGetBeReq{Id: req.Id})
 	if err != nil {
@@ -31,7 +38,7 @@ func UserGet(ctx context.Context, c *app.RequestContext) {
 	}
 	var data *UserGetResp
 	if userCenterResp.GetData() != nil {
-		data = &UserGetResp{Id: userCenterResp.GetData().GetId(), Name: userCenterResp.GetData().GetName() + "/2"}
+		data = &UserGetResp{Id: userCenterResp.GetData().GetId(), Name: userCenterResp.GetData().GetName() + "/api v2"}
 	}
 	c.JSON(200, data)
 	return

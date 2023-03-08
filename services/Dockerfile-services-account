@@ -20,7 +20,7 @@ COPY . .
 RUN go build -ldflags="-s -w" -o /app/services-account main.go
 
 
-FROM scratch
+FROM centos
 
 ENV TZ Asia/Shanghai
 
